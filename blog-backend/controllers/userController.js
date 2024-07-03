@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config');
-
+ 
 exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   console.log('Received data:', req.body); // Log incoming data
@@ -14,7 +13,7 @@ exports.registerUser = async (req, res) => {
 
     const user = await User.create({ name, email, password });
     console.log('User created:', user); // Log created user
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(201).json({ user, token });
   } catch (error) {
     console.error('Error creating user:', error); // Log error
@@ -38,7 +37,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ user, token });
   } catch (error) {
     console.error('Login error:', error); // Log error
