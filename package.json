@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "name": "blogapplication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd blog-app && npm start",
+    "start:backend": "cd blog-backend && npm run server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
