@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,8 +20,18 @@ const Login = () => {
     }
   }, [user, navigate]);
 
+  useEffect(() => {
+    // Check if the token and author are already in localStorage
+    const token = localStorage.getItem('token');
+    const author = localStorage.getItem('author');
+    if (token && author) {
+      // You can set the state or do any other required logic here
+      console.log('User is already logged in with author:', author);
+    }
+  }, []);
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500" >
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-center">Login</h2>
         <div className="space-y-4">
@@ -57,7 +66,7 @@ const Login = () => {
         >
           {status === 'loading' ? 'Logging in...' : 'Login'}
         </button>
-        <p>New User?... <Link className='hover:underline hover:ring-indigo-500' to='/'>Signup</Link></p>
+        <p>New User?... <Link className='hover:underline hover:ring-indigo-500' to='/signup'>Signup</Link></p>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 
 const baseURL = process.env.REACT_APP_BACKEND_API || 'http://localhost:5000/';
 
@@ -7,27 +8,24 @@ const initialState = {
   user: null,
   status: 'idle',
   error: null,
+  token: null,
+  author: null, // Add this to store author information
 };
 
 export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, password }, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${baseURL}/api/login`, { email, password });
-    console.log(response.data)   
     return response.data;
   } catch (error) {
-    console.error('Login error response:', error.response?.data || error.message); // Log error response
     return rejectWithValue(error.response?.data || { error: error.message });
   }
 });
 
 export const signupUser = createAsyncThunk('auth/signupUser', async ({ name, email, password }, { rejectWithValue }) => {
   try {
-    console.log('Attempting signup at:', `${baseURL}api/register`); // Debugging log
     const response = await axios.post(`${baseURL}/api/register`, { name, email, password });
-    console.log('Signup response:', response.data); // Debugging log
     return response.data;
   } catch (error) {
-    console.log('Signup error:', error.response?.data || { error: error.message }); // Log error details
     return rejectWithValue(error.response?.data || { error: error.message });
   }
 });
@@ -38,6 +36,10 @@ const authSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       state.user = null;
+      state.token = null;
+      state.author = null;
+      localStorage.removeItem('author'); // Remove author info from localStorage
+      localStorage.removeItem('token'); // Remove token from localStorage
     },
   },
   extraReducers: (builder) => {
@@ -48,7 +50,16 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload.user;
+        state.token = action.payload.token;
         state.error = action.payload.error ? action.payload.error : null;
+
+        // Decode the token to get author information
+        const decodedToken = jwtDecode(action.payload.token);
+        state.author = decodedToken.author;
+
+        // Store the author information and token in localStorage
+        localStorage.setItem('author', decodedToken.author);
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';

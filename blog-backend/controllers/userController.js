@@ -33,11 +33,11 @@ exports.loginUser = async (req, res) => {
 
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      console.log('Invalid password for email:', email);
+      // console.log('Invalid password for email:', email);
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id , author : user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ user, token });
   } catch (error) {
     console.error('Login error:', error); // Log error

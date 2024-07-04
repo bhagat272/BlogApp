@@ -37,6 +37,24 @@ exports.getBlogById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+//Get a blog by author
+exports.getBlogByauthor = async(req,res)=>{
+  try {
+    const blog = await Blog.find({author:req.params.author});
+    if (blog) {
+      res.json(blog);
+      } else {
+        res.status(404).json({ error: `Blog with author ${req.params.author} not
+          found`
+          });
+}
+  }
+  catch (error) {
+    console.error(`Error fetching blog by author ${req.params.author}:`, error);
+    res.status(500).json({ error: error.message });
+    }
+}
+
 
 // Update a blog by ID
 exports.updateBlog = async (req, res) => {
