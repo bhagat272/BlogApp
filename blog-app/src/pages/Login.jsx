@@ -66,7 +66,7 @@ const Login = () => {
         >
           {status === 'loading' ? 'Logging in...' : 'Login'}
         </button>
-        <p>New User?... <Link className='hover:underline hover:ring-indigo-500' to='/signup'>Signup</Link></p>
+        <p>New User?... <Link className='hover:underline hover:ring-indigo-500' to='/'>Signup</Link></p>
       </div>
     </div>
   );

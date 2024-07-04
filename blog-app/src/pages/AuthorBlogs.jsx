@@ -7,8 +7,9 @@ const AuthorBlogs = () => {
   const dispatch = useDispatch();
   const { authorBlogs, status, error } = useSelector((state) => state.blogs);
   const author = localStorage.getItem('author'); // Retrieve author info from localStorage
-
+  console.log(authorBlogs)
   useEffect(() => {
+    console.log(author)
     if (author) {
       dispatch(fetchBlogByAuthor(author));
     }
@@ -26,10 +27,10 @@ const AuthorBlogs = () => {
     <div className="p-5 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-10">Blogs by <span className="text-indigo-600">{author}</span></h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {authorBlogs.length === 0 ? (
+        {authorBlogs?.length === 0 ? (
           <div className="col-span-full text-center text-lg text-gray-600">No blogs found for this author.</div>
         ) : (
-          authorBlogs.map((blog) => (
+          authorBlogs?.map((blog) => (
             <div
               key={blog._id}
               className="p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200"

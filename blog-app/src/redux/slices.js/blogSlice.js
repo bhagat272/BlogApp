@@ -1,14 +1,15 @@
+// redux/slices/blogSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_BACKEND_API || 'http://localhost:5000/';
+const baseURL = process.env.REACT_APP_BACKEND_API || 'http://localhost:5000';
 
 const initialState = {
   blogs: [],
-  authorBlogs: [], // Add this line for storing blogs specific to the author
   selectedBlog: null,
   status: 'idle',
   error: null,
+  authorBlogs : []    
 };
 
 // Thunk to fetch all blogs
@@ -35,13 +36,18 @@ export const fetchBlogByAuthor = createAsyncThunk('blogs/fetchBlogByAuthor', asy
   return response.data;
 });
 
+// Thunk to increment likes
+export const incrementLikes = createAsyncThunk('blogs/incrementLikes', async ({ id, userId }) => {
+  const response = await axios.patch(`${baseURL}/api/blog/${id}/like`, { userId });
+  return response.data;
+});
+
 const blogsSlice = createSlice({
   name: 'blogs',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch all blogs
       .addCase(fetchBlogs.pending, (state) => {
         state.status = 'loading';
       })
@@ -53,13 +59,9 @@ const blogsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      
-      // Create a new blog
       .addCase(createBlog.fulfilled, (state, action) => {
         state.blogs.push(action.payload);
       })
-      
-      // Fetch a single blog by ID
       .addCase(fetchBlogById.pending, (state) => {
         state.status = 'loading';
         state.selectedBlog = null;
@@ -72,18 +74,25 @@ const blogsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      
-      // Fetch blogs by author
       .addCase(fetchBlogByAuthor.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchBlogByAuthor.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = 'idle';
         state.authorBlogs = action.payload;
       })
       .addCase(fetchBlogByAuthor.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(incrementLikes.fulfilled, (state, action) => {
+        if (state.selectedBlog && state.selectedBlog._id === action.payload._id) {
+          state.selectedBlog.likes = action.payload.likes;
+        }
+        const index = state.blogs.findIndex(blog => blog._id === action.payload._id);
+        if (index !== -1) {
+          state.blogs[index].likes = action.payload.likes;
+        }
       });
   },
 });

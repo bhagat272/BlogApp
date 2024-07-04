@@ -10,7 +10,8 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    if (blogStatus === 'idle') {
+    console.log(blogStatus)
+    if (blogStatus === 'idle' ) {
       dispatch(fetchBlogs());
     }
   }, [blogStatus, dispatch]);
@@ -50,7 +51,7 @@ const HomePage = () => {
         </button>
         <button
           className={`px-3 py-1 rounded-lg text-sm ${selectedCategory === 'lifestyle' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white'}`}
-          onClick={() => handleCategoryChange('lifestyle')}
+          onClick={() => handleCategoryChange('Lifestyle')}
         >
           Lifestyle
         </button>
