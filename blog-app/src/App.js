@@ -11,7 +11,6 @@ import { selectTheme } from './redux/slices.js/themeSlice';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreateBlog from './pages/CreateBlog';
-import UserCreatedBlogs from './pages/UserCreatedBlogs';
 import AuthorBlogs from './pages/AuthorBlogs';
 
 const App = () => {
@@ -33,7 +32,6 @@ const App = () => {
         <Route path="/blog/:id" element={<BlogDetailsPage />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path='/userblog' element={<UserCreatedBlogs/>}/>
         <Route path="/auth-blogs" element={<AuthorBlogs/>}/>
       </Routes>
     </ThemeProvider>
