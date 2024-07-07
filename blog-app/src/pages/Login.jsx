@@ -9,7 +9,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { user, status, error } = useSelector((state) => state.auth);
-const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+  
   const handleLogin = () => {
     dispatch(loginUser({ email, password }));
   };
@@ -21,22 +22,20 @@ const token = localStorage.getItem("token")
   }, [user, navigate]);
 
   useEffect(() => {
-    // Check if the token and author are already in localStorage
     const token = localStorage.getItem('token');
     const author = localStorage.getItem('author');
     if (token && author) {
-      // You can set the state or do any other required logic here
       console.log('User is already logged in with author:', author);
     }
   }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-center">Login</h2>
+      <div className="w-full max-w-md p-8 space-y-8 bg-white bg-opacity-10 backdrop-blur-sm p-10 rounded-xl shadow-lg">
+        <h2 className="text-3xl font-bold text-center text-white">Login</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-white">Email</label>
             <input
               id="email"
               type="email"
@@ -46,7 +45,7 @@ const token = localStorage.getItem("token")
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-white">Password</label>
             <input
               id="password"
               type="password"
@@ -66,7 +65,7 @@ const token = localStorage.getItem("token")
         >
           {status === 'loading' ? 'Logging in...' : 'Login'}
         </button>
-        <p>New User?... <Link className='hover:underline hover:ring-indigo-500' to='/'>Signup</Link></p>
+        <p className="text-center text-white">New User? <Link className="hover:underline" to="/">Signup</Link></p>
       </div>
     </div>
   );
