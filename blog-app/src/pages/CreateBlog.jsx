@@ -23,8 +23,7 @@ const CreateBlog = () => {
       navigate('/login');
     }
   }, [user]);
-  console.log(user)
-
+ 
   const handleCreateBlog = () => {
     if (user && user.name) {
       dispatch(createBlog({ title, content, category, author: user.email }))
