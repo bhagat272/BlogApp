@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBlogByAuthor, deleteBlog, updateBlog } from '../redux/slices.js/blogSlice';
 import DOMPurify from 'dompurify';
 import ThemeSwitcher from '../components/ThemeSwitcher';
-import { Button, IconButton, Modal, TextField } from '@mui/material';
+import { Button, IconButton, Modal, TextField, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -73,7 +73,11 @@ const AuthorBlogs = () => {
   };
 
   if (status === 'loading') {
-    return <div className="text-center mt-5 text-xl font-semibold">Loading blogs...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (status === 'failed') {
