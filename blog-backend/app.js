@@ -15,6 +15,9 @@ app.use(express.json());
 // Routes
 app.use('/api', userRoutes);
 app.use('/api', blogRoutes);
+app.get("/",(req,res)=>{
+  res.send("Blog Backend server")
+})
 
 // Connect to MongoDB and start the server
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
