@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_BACKEND_API || 'http://localhost:5000';
+const baseURL = process.env.REACT_APP_BACKEND_API;
 
 const initialState = {
   blogs: [],
