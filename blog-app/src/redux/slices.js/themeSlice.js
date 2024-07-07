@@ -17,5 +17,5 @@ const themeSlice = createSlice({
 });
 
 export const { toggleTheme } = themeSlice.actions;
-export const selectTheme = (state) => state.mode; // Corrected this line
+export const selectTheme = (state) => state.theme.mode; // Corrected to access the 'mode' inside the 'theme' slice
 export const themeReducer = themeSlice.reducer;

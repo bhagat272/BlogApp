@@ -6,7 +6,7 @@ import { Container, Typography, Button, TextField, Alert, IconButton, Snackbar }
 import { ArrowBack } from '@mui/icons-material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+ 
 const CreateBlog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,12 +61,13 @@ const CreateBlog = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 p-6">
+      
       <Container className="mx-auto my-8 px-8 py-12 bg-white rounded-lg shadow-xl max-w-4xl relative">
         <IconButton
           onClick={() => navigate(-1)} // Navigate back to the previous page
           className="absolute top-4 right-4 text-gray-700 hover:text-gray-900"
         >
-          <ArrowBack fontSize="large" />
+          <ArrowBack fontSize="large" color='primary' />
         </IconButton>
         <Typography variant="h3" className="text-4xl font-bold mb-8 text-center text-indigo-600">
           Create a New Blog
@@ -110,7 +111,7 @@ const CreateBlog = () => {
           color="primary"
           onClick={handleCreateBlog}
           disabled={!title || !content || !category}
-          className="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="px-6 py-3 bg-indigo-800 text-white rounded-lg shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           Create Blog
         </Button>

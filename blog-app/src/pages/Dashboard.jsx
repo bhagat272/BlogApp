@@ -1,7 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../redux/slices.js/authSlice';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/login")
+    // Optionally, redirect user after logout
+    // window.location.href = '/login'; // Example redirection
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white">
       <div className="bg-white bg-opacity-10 backdrop-blur-sm p-10 rounded-xl shadow-lg">
@@ -22,10 +33,16 @@ const Dashboard = () => {
               Home
             </button>
           </Link>
+          <button
+            onClick={handleLogout}
+            className="w-full sm:w-48 px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-lg hover:bg-red-700 transition duration-300"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

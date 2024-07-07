@@ -1,4 +1,3 @@
-// components/BlogDetailsPage.js
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +10,7 @@ const BlogDetailsPage = () => {
   const blog = useSelector((state) => state.blogs.selectedBlog);
   const status = useSelector((state) => state.blogs.status);
   const error = useSelector((state) => state.blogs.error);
+  const author = localStorage.getItem('author');
 
   useEffect(() => {
     if (id) {
@@ -23,10 +23,15 @@ const BlogDetailsPage = () => {
   };
 
   const handleLikeClick = () => {
+    if (!author) {
+      // Handle case where user is not logged in or identified
+      alert('Please log in to like blogs.');
+      return;
+    }
+
     if (id) {
       // Assuming the userId is hardcoded for demonstration purposes. Replace with dynamic user ID as needed.
-      const userId = '60f6c58f2abf5e4b5cd28f36'; // Replace this with actual logged-in user ID
-      dispatch(incrementLikes({ id, userId }));
+       dispatch(incrementLikes({ id }));
     }
   };
 
