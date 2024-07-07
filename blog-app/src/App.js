@@ -12,6 +12,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreateBlog from './pages/CreateBlog';
 import AuthorBlogs from './pages/AuthorBlogs';
+import PrivateRoute from './components/PivateRoute';
 
 const App = () => {
   const themeMode = useSelector(selectTheme);
@@ -27,12 +28,15 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Signup/>}/> 
         <Route path='/login' element={<Login/>}/>
-        <Route path='/createblog' element={<CreateBlog/>} />
+         <Route element={<PrivateRoute/>}>
+         <Route path='/createblog' element={<CreateBlog/>} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/blog/:id" element={<BlogDetailsPage />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/auth-blogs" element={<AuthorBlogs/>}/>
+        
+         </Route>
       </Routes>
     </ThemeProvider>
   );

@@ -9,13 +9,13 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { user, status, error } = useSelector((state) => state.auth);
-
+const token = localStorage.getItem("token")
   const handleLogin = () => {
     dispatch(loginUser({ email, password }));
   };
 
   useEffect(() => {
-    if (user) {
+    if (user || token) {
       navigate('/dashboard');
     }
   }, [user, navigate]);
