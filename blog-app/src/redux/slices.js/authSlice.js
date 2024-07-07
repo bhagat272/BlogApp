@@ -8,7 +8,7 @@ const initialState = {
   user: null,
   status: 'idle',
   error: null,
-  token: null,
+  token: localStorage.getItem("token"),
   author: null, // Add this to store author information
 };
 

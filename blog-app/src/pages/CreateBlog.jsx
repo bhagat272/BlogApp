@@ -14,14 +14,15 @@ const CreateBlog = () => {
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
   const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const [showSnackbar, setShowSnackbar] = useState(false); // State for controlling Snackbar visibility
 
   // Redirect to login if user is not authenticated
   useEffect(() => {
-    if (!user) {
+    if (!token) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [user]);
 
   const handleCreateBlog = () => {
     if (user && user.name) {
@@ -51,7 +52,7 @@ const CreateBlog = () => {
     setShowSnackbar(false);
   };
 
-  if (!user) {
+  if (!token) {
     return (
       <Container>
         <Alert severity="error">You must be logged in to create a blog.</Alert>
