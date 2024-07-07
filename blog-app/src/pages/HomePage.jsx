@@ -47,8 +47,8 @@ const HomePage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Back button */}
-      <div className="mb-6 flex items-center">
+      {/* Header with Back button and ThemeSwitcher */}
+      <div className="mb-6 flex items-center justify-between">
         <Button
           variant="outlined"
           color="primary"
@@ -74,11 +74,13 @@ const HomePage = () => {
         >
           Back
         </Button>
-        <h1 className="text-4xl font-bold text-center mb-8 text-gray-600 flex-grow">Home</h1>
-        <div>
-          <ThemeSwitcher />
-        </div>
+        
+        <ThemeSwitcher />
+
       </div>
+
+      {/* Page title */}
+      <h1 className="text-4xl font-bold text-center mb-8 text-gray-600">Home</h1>
 
       {/* Category filter */}
       <div className="mb-6 text-center">
