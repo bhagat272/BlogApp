@@ -6,7 +6,7 @@ import { Container, Typography, Button, TextField, Alert, IconButton, Snackbar }
 import { ArrowBack } from '@mui/icons-material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
- 
+
 const CreateBlog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,30 +15,29 @@ const CreateBlog = () => {
   const [category, setCategory] = useState('');
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
-  const [showSnackbar, setShowSnackbar] = useState(false); // State for controlling Snackbar visibility
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   // Redirect to login if user is not authenticated
   useEffect(() => {
     if (!token) {
       navigate('/login');
     }
-  }, [user]);
- 
+  }, [token, navigate]);
+
   const handleCreateBlog = () => {
-    if (user && user.name) {
+    const author = localStorage.getItem("author")
+    const token = localStorage.getItem("token")
+    if (author && token) {
       dispatch(createBlog({ title, content, category, author: user.email }))
-        .unwrap() // Unwraps the result to handle the resolved or rejected state
+        .unwrap()
         .then(() => {
-          // Show Snackbar on successful blog creation
           setShowSnackbar(true);
-          // Clear the form
           setTitle('');
           setContent('');
           setCategory('');
-          // Redirect after a delay to allow Snackbar to display
           setTimeout(() => {
             navigate('/dashboard');
-          }, 2000); // Adjust the delay as needed
+          }, 2000);
         })
         .catch((error) => {
           console.error('Failed to create blog:', error);
@@ -62,10 +61,9 @@ const CreateBlog = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 p-6">
-      
       <Container className="mx-auto my-8 px-8 py-12 bg-white rounded-lg shadow-xl max-w-4xl relative">
         <IconButton
-          onClick={() => navigate(-1)} // Navigate back to the previous page
+          onClick={() => navigate(-1)}
           className="absolute top-4 right-4 text-gray-700 hover:text-gray-900"
         >
           <ArrowBack fontSize="large" color='primary' />
@@ -118,10 +116,9 @@ const CreateBlog = () => {
         </Button>
       </Container>
 
-      {/* Snackbar for success notification */}
       <Snackbar
         open={showSnackbar}
-        autoHideDuration={2000} // Adjust the duration as needed
+        autoHideDuration={2000}
         onClose={handleSnackbarClose}
       >
         <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
