@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBlogById, incrementLikes } from '../redux/slices.js/blogSlice';
-import { CircularProgress } from '@mui/material';
 
 const BlogDetailsPage = () => {
   const { id } = useParams();
@@ -36,7 +35,7 @@ const BlogDetailsPage = () => {
     }
   };
 
-  if (status === 'loading') return <div className="text-center mt-10">Loading...<br/><CircularProgress /></div>;
+  if (status === 'loading') return <div className="text-center mt-10">Loading...</div>;
   if (status === 'failed') return <div className="text-center mt-10">Error: {error}</div>;
   if (!blog) return <div className="text-center mt-10">No blog found.</div>;
 

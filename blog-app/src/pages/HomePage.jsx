@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBlogs, incrementLikes } from '../redux/slices.js/blogSlice'; // Import incrementLikes action
 import { Link } from 'react-router-dom';
 import ThemeSwitcher from '../components/ThemeSwitcher';
-import { Button, CircularProgress } from '@mui/material'; // Import CircularProgress
+import { Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; // Import heart outline icon
@@ -106,48 +106,42 @@ const HomePage = () => {
       </div>
 
       {/* Blog grid */}
-      {blogStatus === 'loading' ? (
-        <div className="flex justify-center items-center">
-          <CircularProgress />
-        </div>
-      ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredBlogs.map((blog) => (
-            <div key={blog._id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="p-6">
-                <h2 className="text-2xl font-semibold mb-2">
-                  <Link to={`/blog/${blog._id}`} className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
-                    {blog.title}
-                  </Link>
-                </h2>
-                <p className="text-gray-700">{blog.excerpt}</p>
-                <div className="mt-4 flex justify-between items-center">
-                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-lg">{blog.category}</span>
-                  <div className="flex items-center">
-                    <span className="text-gray-500 mr-2">{blog.likes} Likes</span>
-                    {/* Conditional rendering for heart icon */}
-                    {blog.isLiked ? (
-                      <FavoriteIcon
-                        color="secondary"
-                        fontSize="small"
-                        onClick={() => handleLikeClick(blog)} // Call handleLikeClick with blog object
-                        style={{ cursor: 'pointer' }} // Change cursor to pointer on hover
-                      />
-                    ) : (
-                      <FavoriteBorderIcon
-                        color="secondary"
-                        fontSize="small"
-                        onClick={() => handleLikeClick(blog)} // Call handleLikeClick with blog object
-                        style={{ cursor: 'pointer' }} // Change cursor to pointer on hover
-                      />
-                    )}
-                  </div>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredBlogs.map((blog) => (
+          <div key={blog._id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="p-6">
+              <h2 className="text-2xl font-semibold mb-2">
+                <Link to={`/blog/${blog._id}`} className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                  {blog.title}
+                </Link>
+              </h2>
+              <p className="text-gray-700">{blog.excerpt}</p>
+              <div className="mt-4 flex justify-between items-center">
+                <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-lg">{blog.category}</span>
+                <div className="flex items-center">
+                  <span className="text-gray-500 mr-2">{blog.likes} Likes</span>
+                  {/* Conditional rendering for heart icon */}
+                  {blog.isLiked ? (
+                    <FavoriteIcon
+                      color="secondary"
+                      fontSize="small"
+                      onClick={() => handleLikeClick(blog)} // Call handleLikeClick with blog object
+                      style={{ cursor: 'pointer' }} // Change cursor to pointer on hover
+                    />
+                  ) : (
+                    <FavoriteBorderIcon
+                      color="secondary"
+                      fontSize="small"
+                      onClick={() => handleLikeClick(blog)} // Call handleLikeClick with blog object
+                      style={{ cursor: 'pointer' }} // Change cursor to pointer on hover
+                    />
+                  )}
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
