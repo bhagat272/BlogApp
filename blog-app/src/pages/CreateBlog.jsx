@@ -24,11 +24,10 @@ const CreateBlog = () => {
     }
   }, [token, navigate]);
 
-  const handleCreateBlog = () => {
-    const author = localStorage.getItem("author")
-    const token = localStorage.getItem("token")
-    if (author && token) {
-      dispatch(createBlog({ title, content, category, author: user.email }))
+  const handleCreateBlog = () => { 
+
+    if (user && user.author) {
+      dispatch(createBlog({ title, content, category, author: user.author }))
         .unwrap()
         .then(() => {
           setShowSnackbar(true);
