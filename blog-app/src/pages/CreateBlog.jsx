@@ -6,6 +6,8 @@ import { Container, Typography, Button, TextField, Alert, IconButton, Snackbar }
 import { ArrowBack } from '@mui/icons-material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import {jwtDecode} from 'jwt-decode';
+import { setAuth } from '../redux/slices.js/authSlice';
 
 const CreateBlog = () => {
   const dispatch = useDispatch();
@@ -17,6 +19,15 @@ const CreateBlog = () => {
   const token = useSelector((state) => state.auth.token);
   const [showSnackbar, setShowSnackbar] = useState(false);
 
+  // Ensure user authentication on mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      dispatch(setAuth({ token, user: decodedToken, author: decodedToken.author }));
+    }
+  }, [dispatch]);
+
   // Redirect to login if user is not authenticated
   useEffect(() => {
     if (!token) {
@@ -24,8 +35,7 @@ const CreateBlog = () => {
     }
   }, [token, navigate]);
 
-  const handleCreateBlog = () => { 
-
+  const handleCreateBlog = () => {
     if (user && user.author) {
       dispatch(createBlog({ title, content, category, author: user.author }))
         .unwrap()
@@ -65,7 +75,7 @@ const CreateBlog = () => {
           onClick={() => navigate(-1)}
           className="absolute top-4 right-4 text-gray-700 hover:text-gray-900"
         >
-          <ArrowBack fontSize="large" color='primary' />
+          <ArrowBack fontSize="large" color="primary" />
         </IconButton>
         <Typography variant="h3" className="text-4xl font-bold mb-8 text-center text-indigo-600">
           Create a New Blog
